@@ -50,7 +50,10 @@ const renderTable = function( appdata ) {
       <td>${entry.quantity}</td>
       <td>${entry.utilization}</td>
       <td>${entry.status || ''}</td>
-      <td> <button onclick="deleteRow(${index})">Delete</button> </td>
+      <td> 
+        <button onclick="deleteRow(${index})">Delete</button> 
+        <button onclick="adjustQuantity(${index})">Adjust Quantity</button>
+      </td>
     `
     tbody.appendChild( row )
   })
@@ -66,6 +69,23 @@ async function deleteRow(index) {
   const text = await response.text()
   const data = JSON.parse(text)
   renderTable(data)
+}
+
+async function adjustQuantity(index) {
+  const newQuantity = prompt("Enter the new quantity:");
+  if (newQuantity !== null) {
+    const response = await fetch(`/data/${index}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ quantity: newQuantity })
+    })
+
+      const text = await response.text()
+      const data = JSON.parse(text)
+      renderTable(data)
+  }
 }
 
 const fetchData = async function() {

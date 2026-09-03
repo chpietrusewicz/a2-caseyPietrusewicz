@@ -8,7 +8,8 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'item': 'Milk', 'category': 'Fridge', 'quantity': 1, 'utilization' : 'High', 'status': 'Need' }
+  { 'item': 'Milk', 'category': 'Fridge', 'quantity': 1, 'utilization' : 'High', 'status': 'Need' },
+  { 'item': 'Pasta', 'category': 'Pantry', 'quantity': 5, 'utilization' : 'Low', 'status': 'Have' }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -18,6 +19,8 @@ const server = http.createServer( function( request,response ) {
     handlePost( request, response ) 
   }else if ( request.method === 'DELETE' ){
     handleDelete( request, response )
+  }else if (request.method === 'PATCH') {
+  handleUpdate(request, response)
   }
 })
 
@@ -76,6 +79,45 @@ const handleDelete = function( request, response ) {
     response.writeHead( 400, "Bad Request", {'Content-Type': 'text/plain' })
     response.end( JSON.stringify({ error: 'Invalid index' }) )
   }
+}
+
+const handleUpdate = function(request, response) {
+  const index = parseInt(request.url.split('/')[2])
+  let dataString = ''
+
+  request.on('data', function(data) {
+    dataString += data
+  })
+
+  request.on('end', function() {
+    const data = JSON.parse(dataString)
+    const quantity = Number(data.quantity)
+
+    if (
+      isNaN(index) ||
+      index < 0 ||
+      index >= appdata.length ||
+      !Number.isFinite(quantity) ||
+      quantity < 0
+    ) {
+      response.writeHead(400, 'Bad Request', {
+        'Content-Type': 'application/json'
+      })
+      response.end(JSON.stringify({ error: 'Invalid quantity or index' }))
+      return
+    }
+
+    appdata[index].quantity = quantity
+    appdata[index].status =
+      quantity <= 1 && appdata[index].utilization === 'High' || quantity <= 0
+        ? 'Need'
+        : 'Have'
+
+    response.writeHead(200, 'OK', {
+      'Content-Type': 'application/json'
+    })
+    response.end(JSON.stringify(appdata))
+  })
 }
 
 const sendFile = function( response, filename ) {

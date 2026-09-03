@@ -1,20 +1,29 @@
 <!doctype html>
 <html lang='en'>
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset='utf-8' />
-    <script src='js/main.js'></script>
-    <link rel='stylesheet' href='css/main.css' />
-    
-    <!-- get rid of favicon error -->
-    <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
-  </head>
-  <body>
-    <form id="groceries">
+
+<head>
+  <title>Apartment Necessities Tracker</title>
+  <meta charset='utf-8' />
+  <script src='js/main.js'></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='css/main.css' />
+  <!-- get rid of favicon error -->
+  <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
+</head>
+
+<body>
+  <h1>
+    Apartment Necessities Tracker
+  </h1>
+  <main class="container">
+    <form class="groceries" id="groceries">
       <label for='item'>Item:</label>
       <input type='text' id='item' name="item" placeholder='eg. Milk' required>
       <label for='category'>Category:</label>
       <select id='category' name="category" required>
+        <option value="" disabled selected>Select a category:</option>
         <option value='Fridge'>Fridge</option>
         <option value='Pantry'>Pantry</option>
         <option value='Freezer'>Freezer</option>
@@ -26,24 +35,28 @@
       <input type='number' id='quantity' name="quantity" min="0" placeholder='eg. 1' required>
       <label for='utilization'>Utilization:</label>
       <select id='utilization' name="utilization" required>
+        <option value="" disabled selected>Select utilization level:</option>
         <option value='High'>High</option>
         <option value='Low'>Low</option>
       </select>
-      <button type="submit">submit</button>
+      <button class="submit" type="submit">Submit</button>
     </form>
 
     <table id="grocery-table">
       <thead>
         <tr>
-          <th>Item</th>
-          <th>Category</th>
-          <th>Quantity</th>
-          <th>Utilization</th>
-          <th>Status</th>
+          <th class="item">Item</th>
+          <th class="category">Category</th>
+          <th class="quantity">Quantity</th>
+          <th class="utilization">Utilization</th>
+          <th class="status">Status</th>
+          <th class="actions">Actions</th>
         </tr>
       </thead>
       <tbody>
       </tbody>
     </table>
-  </body>
+  </main>
+</body>
+
 </html>
