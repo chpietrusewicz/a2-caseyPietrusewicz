@@ -10,9 +10,36 @@
     <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
   </head>
   <body>
-    <form>
-      <input type='text' id='yourname' value='your name here'>
-      <button>submit</button>
+    <form id="groceries">
+      <input type='text' id='item' name="item" placeholder='eg. Milk' required>
+      <select id='category' name="category" required>
+        <option value='Fridge'>Fridge</option>
+        <option value='Pantry'>Pantry</option>
+        <option value='Freezer'>Freezer</option>
+        <option value='Cleaning'>Cleaning</option>
+        <option value='Household'>Household</option>
+        <option value='Other'>Other</option>
+      </select>
+      <input type='number' id='quantity' name="quantity" min="0" placeholder='eg. 1' required>
+      <select id='utilization' name="utilization" required>
+        <option value='High'>High</option>
+        <option value='Low'>Low</option>
+      </select>
+      <button type="submit">submit</button>
     </form>
+
+    <table id="grocery-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Category</th>
+          <th>Quantity</th>
+          <th>Utilization</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </body>
 </html>

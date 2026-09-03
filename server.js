@@ -8,9 +8,7 @@ const http = require( 'http' ),
       port = 3000
 
 const appdata = [
-  { 'model': 'toyota', 'year': 1999, 'mpg': 23 },
-  { 'model': 'honda', 'year': 2004, 'mpg': 30 },
-  { 'model': 'ford', 'year': 1987, 'mpg': 14} 
+  { 'item': 'Milk', 'category': 'Fridge', 'quantity': 1, 'utilization' : 'High', 'status': 'Need' }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -26,6 +24,10 @@ const handleGet = function( request, response ) {
 
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
+  }else if ( request.url === '/data' ) {
+    // ADD THIS: Send the current array back to client on page load
+    response.writeHead( 200, "OK", { 'Content-Type': 'text/plain' })
+    response.end( JSON.stringify( appdata ) )
   }else{
     sendFile( response, filename )
   }
@@ -40,12 +42,24 @@ const handlePost = function( request, response ) {
 
   request.on( 'end', function() {
     console.log( JSON.parse( dataString ) )
-    // ... do something with the data here!!!
+    const data = JSON.parse( dataString )
+    
+    const quantity = Number(data.quantity)
+    const utilization = data.utilization
+    let status
+    if (quantity <= 1 && utilization === 'High' || quantity <= 0) {
+      status = 'Need'
+    }
+    else {
+      status = 'Have'
+    }
+
+    appdata.push({ 'item': data.item, 'category': data.category, 'quantity': quantity, 'utilization': utilization, 'status': status })
 
     response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
 
     // change this to incorporate data
-    response.end('test')
+    response.end( JSON.stringify(appdata) )
   })
 }
 
