@@ -80,15 +80,19 @@ Below are suggested technical and design achievements. You can use these to help
 
 You'll need to use some type of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
 
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
+1. Casey Pietrusewicz
+2. The value rating was a bit confusing to the user. Was not sure in which order the different levels went.
+3. The user was confused with why the row of the table was highlighted when hovering over it. He thought there
+was a clickable function besides just the delete and edit buttons.
+4. The user accidentally deleted an item, and could not remember what the values were. This could be solved
+with an undo button or a confirmation on the delete.
 
 *You do not need to actually make changes based on their feedback*. This achievement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
+
+https://a2-caseypietrusewicz.onrender.com/
 
 ## Your Web Application Title
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
