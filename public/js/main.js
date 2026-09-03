@@ -1,6 +1,12 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const submit = async function( event ) {
+  const form = event.currentTarget
+  if (!form.checkValidity()) {
+    form.reportValidity()
+    return
+  }
+
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
@@ -36,7 +42,7 @@ const renderTable = function( appdata ) {
 
   tbody.innerHTML = ''
 
-  appdata.forEach( entry => {
+  appdata.forEach( (entry, index) => {
     const row = document.createElement( 'tr' )
     row.innerHTML = `
       <td>${entry.item}</td>
@@ -44,9 +50,22 @@ const renderTable = function( appdata ) {
       <td>${entry.quantity}</td>
       <td>${entry.utilization}</td>
       <td>${entry.status || ''}</td>
+      <td> <button onclick="deleteRow(${index})">Delete</button> </td>
     `
     tbody.appendChild( row )
   })
+}
+
+async function deleteRow(index) {
+  // const row = button.parentNode.parentNode;
+  // row.remove();
+  console.log(index)
+  const response = await fetch( `/data/${index}`, {
+    method: 'DELETE'
+  })
+  const text = await response.text()
+  const data = JSON.parse(text)
+  renderTable(data)
 }
 
 const fetchData = async function() {
@@ -57,7 +76,7 @@ const fetchData = async function() {
 }
 
 window.onload = function() {
-  const button = document.querySelector('button')
-  button.onclick = submit
+  const form = document.querySelector('#groceries')
+  form.addEventListener('submit', submit)
   fetchData()
 }

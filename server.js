@@ -16,6 +16,8 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === 'POST' ){
     handlePost( request, response ) 
+  }else if ( request.method === 'DELETE' ){
+    handleDelete( request, response )
   }
 })
 
@@ -25,7 +27,6 @@ const handleGet = function( request, response ) {
   if( request.url === '/' ) {
     sendFile( response, 'public/index.html' )
   }else if ( request.url === '/data' ) {
-    // ADD THIS: Send the current array back to client on page load
     response.writeHead( 200, "OK", { 'Content-Type': 'text/plain' })
     response.end( JSON.stringify( appdata ) )
   }else{
@@ -61,6 +62,20 @@ const handlePost = function( request, response ) {
     // change this to incorporate data
     response.end( JSON.stringify(appdata) )
   })
+}
+
+const handleDelete = function( request, response ) {
+  console.log(request.url)
+  const index = parseInt(request.url.split('/')[2])
+  console.log(index)
+  if (!isNaN(index) && index >= 0 && index < appdata.length) {
+    appdata.splice(index, 1)
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end( JSON.stringify(appdata) )
+  } else {
+    response.writeHead( 400, "Bad Request", {'Content-Type': 'text/plain' })
+    response.end( JSON.stringify({ error: 'Invalid index' }) )
+  }
 }
 
 const sendFile = function( response, filename ) {

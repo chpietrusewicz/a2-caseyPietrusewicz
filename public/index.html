@@ -11,7 +11,9 @@
   </head>
   <body>
     <form id="groceries">
+      <label for='item'>Item:</label>
       <input type='text' id='item' name="item" placeholder='eg. Milk' required>
+      <label for='category'>Category:</label>
       <select id='category' name="category" required>
         <option value='Fridge'>Fridge</option>
         <option value='Pantry'>Pantry</option>
@@ -20,7 +22,9 @@
         <option value='Household'>Household</option>
         <option value='Other'>Other</option>
       </select>
+      <label for='quantity'>Quantity:</label>
       <input type='number' id='quantity' name="quantity" min="0" placeholder='eg. 1' required>
+      <label for='utilization'>Utilization:</label>
       <select id='utilization' name="utilization" required>
         <option value='High'>High</option>
         <option value='Low'>Low</option>
